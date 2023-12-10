@@ -1,0 +1,45 @@
+# Use postgres/example user/password credentials
+version: '3.1'
+
+services:
+  db:
+    image: postgres
+    container_name: postgres
+#    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin1234
+    ports:
+      - 5432:5432
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    depends_on:
+      - db
+    ports:
+      - "5050:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@pgadmin
+      PGADMIN_DEFAULT_PASSWORD: admin
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+#    restart: unless-stopped
+
+#  adminer:
+#    image: adminer
+#    container_name: adminer
+##    restart: always
+#    ports:
+#      - 5050:8080
+##    environment:
+##      - ADMINER_PLUGINS: "tables-filter tinymce"
+#    depends_on:
+#      - db
+
+volumes:
+  pgadmin-data:
+    name: pgadmin_data
+  db-data:
+    name: postgres_db_data
