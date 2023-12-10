@@ -32,6 +32,7 @@ services:
 networks:
   mongo-network:
     driver: bridge
+    name: 'mongo-network'
 
 volumes:
   mongo-data:
